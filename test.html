@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC|Booking Science LAB v1</title> <link rel="shortcut icon" type="image/png" href="https://img2.pic.in.th/pic/Pakchong_School-removebg-preview.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Itim|Kanit|Mali|Mitr|Niramit|Pattaya|Prompt|Questrial|Sarabun|Sriracha' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400&display=swap" rel="stylesheet">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+
+    <style>
+	
+			 .swal-modal .swal-text {
+				text-align: center;
+			}
+	
+			/* Custom class for larger SweetAlert with increased height and font size */
+			.swal2-popup.swal-custom-large {
+				width: 450px !important;    /* กำหนดความกว้างตามต้องการ */
+				min-height: auto !important; /* กำหนดความสูงขั้นต่ำ */
+				font-size: 1.1em !important;  /* เพิ่มขนาดตัวอักษรโดยรวมของ alert */
+				padding-top: 20px !important; /* เพิ่ม padding ด้านบน */
+				padding-bottom: 20px !important;/* เพิ่ม padding ด้านล่าง */
+				text-align: center;
+			}
+
+			.swal-custom-large .swal2-title {
+				font-size: 1.7em !important;
+				margin-bottom: 15px !important;
+				text-align: center;
+			}
+
+			.swal-custom-large .swal2-html-container {
+				font-size: 1.1em !important;
+				line-height: 1.6 !important;
+                text-align: left !important;
+                margin-left: 10px !important;
+			}
+            .swal-custom-large .swal2-html-container p {
+                margin-bottom: 8px !important;
+            }
+
+			.swal-custom-large .swal2-input {
+				font-size: 1.2em !important;
+				height: auto !important;
+				padding: 10px !important;
+				text-align: center;
+			}
+
+			.swal-custom-large .swal2-actions button {
+				font-size: 1em !important;
+				padding: 10px 20px !important;
+                margin: 5px !important;
+				text-align: center;
+			}
+			.swal-custom-large .swal2-validation-message {
+				font-size: 1em !important;
+				text-align: center;
+			}
+			
+        body {
+            font-family: 'Niramit', sans-serif;
+            background-color: #f8f9fa;
+            padding-top: 20px;
+        }
+        .panel-primary > .panel-heading { background-color: #007bff; border-color: #007bff; color: white; }
+        .panel-default > .panel-heading { background-color: #f5f5f5; border-color: #ddd; color: #333; }
+        .panel { border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .btn-primary { background-color: #007bff; border-color: #007bff; }
+        .btn-primary:hover, .btn-primary:focus { background-color: #0056b3; border-color: #0056b3; }
+        .input-group { min-width: 120px; text-align: left; }
+        .input-group-addon .fas { margin-right: 8px; }
+        #bookingTable th { background-color: #e9ecef; }
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td:first-child:before,
+        table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>th:first-child:before { background-color: #007bff; color: white; }
+        .help-block { color: #737373; }
+        .form-spacing { margin-bottom: 15px; }
+        .nav-tabs > li > a { font-size: 16px; }
+        .nav-tabs > li.active > a,
+        .nav-tabs > li.active > a:hover,
+        .nav-tabs > li.active > a:focus { background-color: #007bff; color: white; border-color: #007bff; border-bottom-color: transparent; }
+        .tab-content { margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-top: none; background-color: #fff; border-radius: 0 0 4px 4px; }
+        
+        .fc-event {
+            cursor: pointer;
+        }
+		
+		.fc .fc-toolbar-title {
+		  font-size: 1.1em; 
+		}
+		.fc .fc-button {
+		  font-size: 0.85em; 
+		  padding: 5px 8px;  
+		}
+		
+		.fc .fc-header-toolbar {
+		  background-color: #007bff; 
+		  color: white;            
+		  padding: 8px 5px;        
+		  margin-bottom: 0px;      
+		  border: 1px solid #007bff; 
+		}
+
+		.fc .fc-header-toolbar .fc-button {
+		  background-color: #0056b3; 
+		  border-color: #004085;    
+		  color: white;             
+		}
+
+		.fc .fc-header-toolbar .fc-button:hover,
+		.fc .fc-header-toolbar .fc-button:focus,
+		.fc .fc-header-toolbar .fc-button:active,
+		.fc .fc-header-toolbar .fc-button.fc-button-active { 
+		  background-color: #004085; 
+		  border-color: #003065;
+		  color: white;
+		}
+
+		.fc .fc-header-toolbar .fc-toolbar-title {
+		  color: white !important; 
+		}
+		
+		.fc .fc-col-header-cell {
+		  background-color: #e9ecef; 
+		  color: #495057;            
+		}
+
+		.fc .fc-col-header-cell-cushion { 
+		  color: #495057; 
+		}
+		
+		.modal {
+			text-align: center;
+			padding-left: 0 !important;
+			padding-right: 0 !important;
+		}
+
+		@media screen and (min-width: 768px) { 
+			.modal:before {
+				content: " ";
+				display: inline-block;
+				height: 100%;
+				vertical-align: middle;
+				margin-right: -4px; 
+			}
+		}
+
+		.modal-dialog {
+			display: inline-block;
+			text-align: left; 
+			vertical-align: middle;
+		}
+		
+		.banner img { width: 100%; max-height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; display: block; background-color: #eee; border: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="card shadow-sm border-primary position-relative" style="padding: 15px; margin-bottom: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);">
+            <div class="card-body p-3 p-md-4">
+               <div class="banner">
+                 <img src="https://lh5.googleusercontent.com/d/1Ihnlbpt0aCgC4rC7M8lIHymAQkkRnY1Q" alt="Form Banner"> </div>
+				 
+			<div class="container text-center mt-3 mb-3">
+            <marquee behavior="scroll" direction="left" style="color:#000000; font-size: 18px;margin-top: 2px; margin-bottom: 2px;" onmouseover="this.stop();" onmouseout="this.start();"><h3 style="margin-top: 2px; margin-bottom: 4px;"><img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" > ยินดีต้อนรับเข้าสู่ระบบจองห้องปฏิบัติการวิทยาศาสตร์ โรงเรียนปากช่อง :: ออกแบบและพัฒนาโดย KT | Tanasarn Sirak <img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" ></h3></marquee>
+			</div>
+				 
+                <div id="mainContent" >
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#bookingFormTab" aria-controls="bookingFormTab" role="tab" data-toggle="tab"><i class="fas fa-edit"></i> แบบฟอร์มการจอง</a></li>
+                        <li role="presentation"><a href="#bookingTableTab" aria-controls="bookingTableTab" role="tab" data-toggle="tab"><i class="fas fa-table"></i> ข้อมูลการจอง</a></li>
+                        <li role="presentation"><a href="#physicsCalendarViewTab" aria-controls="physicsCalendarViewTab" role="tab" data-toggle="tab"><i class="fas fa-atom"></i> ปฏิทินแล็บฟิสิกส์</a></li>
+                        <li role="presentation"><a href="#chemistryCalendarViewTab" aria-controls="chemistryCalendarViewTab" role="tab" data-toggle="tab"><i class="fas fa-flask"></i> ปฏิทินแล็บเคมี</a></li>
+                        <li role="presentation"><a href="#biologyCalendarViewTab" aria-controls="biologyCalendarViewTab" role="tab" data-toggle="tab"><i class="fas fa-dna"></i> ปฏิทินแล็บชีววิทยา</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="bookingFormTab">
+                            <div class="panel panel-primary" style="margin-top:2px; box-shadow: none; border: none;">
+                                <div class="panel-body" style="padding:0px; margin-bottom: 5px;">
+                                    <form id="bookingForm">
+                                        <div class="row">
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="requesterName" class="form-label fw-bold required-field"><i class="fas fa-user fa-bounce"></i> ชื่อผู้จอง</label>
+                                                <select class="form-control" id="requesterName" name="requesterName" required>
+                                                    <option value="" disabled selected>เลือก...</option>
+                                                    <option value="อ.ธนบดี">อ.ธนบดี</option>
+                                                    <option value="อ.ธนสาร">อ.ธนสาร</option>
+                                                    <option value="อ.ณัฐชา">อ.ณัฐชา</option>
+                                                    <option value="อ.สุจิตตรา">อ.สุจิตตรา</option>
+                                                    <option value="อ.จุฑามาศ">อ.จุฑามาศ</option>
+                                                    <option value="อ.ปัทมา">อ.ปัทมา</option>
+                                                    <option value="อ.จริญญา">อ.จริญญา</option>
+                                                    <option value="อ.แสนชัย">อ.แสนชัย</option>
+                                                    <option value="อ.นันทวัฒน์">อ.นันทวัฒน์</option>
+                                                    <option value="อ.รังสรรค์">อ.รังสรรค์</option>
+                                                    <option value="อ.บุญโย">อ.บุญโย</option>
+                                                    <option value="อ.สุภัค">อ.สุภัค</option>
+                                                    <option value="อ.พิมล">อ.พิมล</option>
+                                                    <option value="อ.สุดา">อ.สุดา</option>
+                                                    <option value="อ.กิตติมา">อ.กิตติมา</option>
+                                                    <option value="อ.ณภัชนันท์">อ.ณภัชนันท์</option>
+                                                    <option value="อ.ปริชาติ">อ.ปริชาติ</option>
+                                                    <option value="อ.ฉัตรฉัย">อ.ฉัตรฉัย</option>
+                                                    <option value="อ.อรนุช">อ.อรนุช</option>
+                                                    <option value="อ.กนิษฐา">อ.กนิษฐา</option>
+                                                    <option value="อ.สุนิษา">อ.สุนิษา</option>
+                                                    <option value="อื่นๆ">อื่นๆ</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="fieldOfStudy"><i class="fas fa-atom fa-bounce"></i> สาขาวิชา</label>
+                                                <select class="form-control" id="fieldOfStudy" name="fieldOfStudy" required>
+                                                    <option value="" disabled selected>เลือกสาขาวิชา...</option>
+                                                    <option value="ฟิสิกส์">ฟิสิกส์</option>
+                                                    <option value="เคมี">เคมี</option>
+                                                    <option value="ชีววิทยา">ชีววิทยา</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="labRequested"><i class="fas fa-microscope fa-bounce"></i> จองห้อง</label>
+                                                <select class="form-control" id="labRequested" name="labRequested" required>
+                                                    <option value="" disabled selected>เลือกห้องปฏิบัติการ...</option>
+                                                    <option value="ห้องปฏิบัติการฟิสิกส์">ห้องปฏิบัติการฟิสิกส์</option>
+                                                    <option value="ห้องปฏิบัติการเคมี">ห้องปฏิบัติการเคมี</option>
+                                                    <option value="ห้องปฏิบัติการชีววิทยา">ห้องปฏิบัติการชีววิทยา</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="bookingDate"><i class="fas fa-calendar-alt fa-bounce"></i> วันที่จอง</label>
+                                                <input type="date" class="form-control" id="bookingDate" name="bookingDate" required>
+                                            </div>
+
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="startTimeSlot"><i class="fas fa-clock fa-bounce"></i> เริ่มคาบเรียน</label>
+                                                <select class="form-control" id="startTimeSlot" name="startTimeSlot" required>
+                                                    <option value="" disabled selected>เลือกคาบ...</option>
+                                                    <option value="08:30-09:25">คาบ 1 (08.30-09.25 น.)</option>
+                                                    <option value="09:25-10:20">คาบ 2 (09.25-10.20 น.)</option>
+                                                    <option value="10:20-11:15">คาบ 3 (10.20-11.15 น.)</option>
+                                                    <option value="11:15-12:10">คาบ 4 (11.15-12.10 น.)</option>
+                                                    <option value="12:10-13:05">คาบ 5 (12.10-13.05 น.)</option>
+                                                    <option value="13:05-14:00">คาบ 6 (13.05-14.00 น.)</option>
+                                                    <option value="14:00-14:55">คาบ 7 (14.00-14.55 น.)</option>
+                                                    <option value="14:55-15:50">คาบ 8 (14.55-15.50 น.)</option>
+                                                    <option value="16:30-17:30">คาบ 9 (16.30-17.30 น.)</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="endTimeSlot"><i class="fas fa-clock fa-bounce"></i> สิ้นสุดคาบเรียน</label>
+                                                <select class="form-control" id="endTimeSlot" name="endTimeSlot" required>
+                                                    <option value="" disabled selected>เลือกคาบ...</option>
+                                                    <option value="08:30-09:25">คาบ 1 (08.30-09.25 น.)</option>
+                                                    <option value="09:25-10:20">คาบ 2 (09.25-10.20 น.)</option>
+                                                    <option value="10:20-11:15">คาบ 3 (10.20-11.15 น.)</option>
+                                                    <option value="11:15-12:10">คาบ 4 (11.15-12.10 น.)</option>
+                                                    <option value="12:10-13:05">คาบ 5 (12.10-13.05 น.)</option>
+                                                    <option value="13:05-14:00">คาบ 6 (13.05-14.00 น.)</option>
+                                                    <option value="14:00-14:55">คาบ 7 (14.00-14.55 น.)</option>
+                                                    <option value="14:55-15:50">คาบ 8 (14.55-15.50 น.)</option>
+                                                    <option value="16:30-17:30">คาบ 9 (16.30-17.30 น.)</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="studentGrade"><i class="fas fa-chalkboard-teacher fa-bounce"></i> ห้องที่สอน </label>
+                                                <input type="text" class="form-control" id="studentGrade" name="studentGrade" required placeholder="เช่น ม.4/1">
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="studentCount"><i class="fas fa-users fa-bounce"></i> จำนวนนักเรียน (ถ้ามี)</label>
+                                                <input type="number" class="form-control" id="studentCount" name="studentCount" placeholder="เช่น 30">
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="topic"><i class="fas fa-book fa-bounce"></i> หัวข้อการสอน/ปฏิบัติการ</label>
+                                                <input type="text" class="form-control" id="topic" name="topic" placeholder="เช่น ปฏิกิริยาเคมี">
+                                            </div>
+                                            <div class="col-md-6" style="margin-bottom: 10px;">
+                                                <label for="materialsNeeded"><i class="fas fa-tools fa-bounce"></i> สิ่งที่ต้องการ</label>
+                                                <textarea class="form-control" id="materialsNeeded" name="materialsNeeded" rows="3" placeholder="ระบุรายการ"></textarea>
+                                            </div>
+                                            <div class="col-md-12" style="margin-bottom: 10px;">
+                                                <label for="directionLabFile"><i class="fas fa-file-upload fa-bounce"></i> แนบไฟล์ Direction Lab (ถ้ามี)</label>
+                                                <input type="file" class="form-control" id="directionLabFile" name="directionLabFile" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.txt,.ppt,.pptx">
+                                            </div>
+                                            <div class="col-md-12" style="margin-bottom: 10px;">
+                                                <button type="submit" class="btn btn-primary btn-block btn-lg"><i class="fas fa-paper-plane"></i> ส่งข้อมูลการจอง</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="bookingTableTab">
+                            <div class="panel panel-default" style="margin-top:0; box-shadow: none; border: none;">
+                                <div class="panel-body" style="padding:0;">
+                                    <div class="row" style="margin-bottom: 15px;">
+                                        <div class="col-md-6 form-group">
+                                            <label for="filterLab">กรองตามห้องปฏิบัติการ:</label>
+                                            <select id="filterLab" class="form-control input-sm">
+                                                <option value="">ทั้งหมด</option>
+                                                <option value="ห้องปฏิบัติการฟิสิกส์">ห้องปฏิบัติการฟิสิกส์</option>
+                                                <option value="ห้องปฏิบัติการเคมี">ห้องปฏิบัติการเคมี</option>
+                                                <option value="ห้องปฏิบัติการชีววิทยา">ห้องปฏิบัติการชีววิทยา</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 form-group">
+                                            <label for="filterDate">กรองตามวันเริ่มต้น:</label>
+                                            <input type="date" id="filterDate" class="form-control input-sm">
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table id="bookingTable" class="table table-striped table-hover" style="width:100%">
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="physicsCalendarViewTab">
+                            <div id="physicsCalendar" style="margin-top: 10px;"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="chemistryCalendarViewTab">
+                             <div id="chemistryCalendar" style="margin-top: 10px;"></div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="biologyCalendarViewTab">
+                            <div id="biologyCalendar" style="margin-top: 10px;"></div>
+                        </div>
+                    </div>
+                </div> <footer style="text-align: center;background-color:#faff99; padding: 10px 0; margin-top: 10px; border-top: 1px solid #e0e0e0; font-size: 0.9em; color: #555; width: 100%;">
+                    :: Created and Develop by KT|Tanasarn Sirak ::
+                    <div class="container text-center">
+                    <a href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"><i class="fa-solid fa-comments"></i></a> <a style="color:red;text-decoration:none;font-size:12px" href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"> สอบถาม/แจ้งปัญหา :: <span style="font-size:12px;color:black">KT | Tanasarn Sirak © <script>document.write(new Date().getFullYear()+543)</script> </a>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="eventDetailModal" tabindex="-1" role="dialog" aria-labelledby="eventDetailModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header panel-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true" style="color:white;">×</span></button>
+                    <h4 class="modal-title" id="eventDetailModalLabel" style="color:black;"><i class="fas fa-info-circle"></i> รายละเอียดการจอง</h4>
+                </div>
+                <div class="modal-body">
+                    <p><strong><i class="fas fa-microscope"></i> ห้องที่จอง:</strong> <span id="eventLab"></span></p>
+                    <p><strong><i class="fas fa-user"></i> ชื่อผู้จอง:</strong> <span id="eventRequester"></span></p>
+                    <p><strong><i class="fas fa-calendar-alt"></i> วันที่เริ่มต้น:</strong> <span id="eventStart"></span></p>
+                    <p><strong><i class="fas fa-calendar-check"></i> วันที่สิ้นสุด:</strong> <span id="eventEnd"></span></p>
+                    <p><strong><i class="fas fa-chalkboard-teacher"></i> สอนห้อง:</strong> <span id="eventGrade"></span></p>
+                    <p><strong><i class="fas fa-book"></i> หัวข้อ:</strong> <span id="eventTopic"></span></p>
+                    <p><strong><i class="fas fa-tools"></i> สิ่งที่ต้องการ:</strong> <span id="eventMaterials"></span></p>
+                    <p><strong><i class="fas fa-file-alt"></i> ไฟล์ Direction Lab:</strong> <span id="eventDirectionLabFile"></span></p> </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/responsive.bootstrap.min.js"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/th.js'></script>
+
+    <script>
+        const APPS_SCRIPT_WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyeJsFDK-ma4hhghjil7ZwP7gHraAV7C1oCGZV1G0bJpwOQTG3MJxXNiqo8MtBzarK_/exec'; // << กรุณาแทนที่ด้วย URL ของ Web App ของคุณ
+        let mockBookings = [];
+        let calendarInstances = {}; 
+        let allFetchedBookings = [];
+        let validTeacherCodesStore = []; 
+
+        async function fetchTeacherCodesFromServer() {
+            Swal.fire({
+                title: 'กำลังโหลดข้อมูลรหัสครู...',
+                allowOutsideClick: false,
+				customClass: { 
+                popup: 'swal-custom-large'
+            },
+                didOpen: () => { Swal.showLoading(); }
+            });
+            try {
+                const response = await fetch(`${APPS_SCRIPT_WEB_APP_URL}?action=getTeacherCodes`);
+                if (!response.ok) {
+                    const errorData = await response.text(); 
+                    throw new Error(`ไม่สามารถโหลดข้อมูลรหัสครูได้: ${response.status} - ${errorData.substring(0,100)}`);
+                }
+                const result = await response.json();
+                Swal.close();
+                if (result.success && Array.isArray(result.codes)) {
+                    console.log("Fetched teacher codes:", result.codes);
+                    return result.codes;
+                } else {
+                    console.error("Fetch teacher codes error:", result.message || "Unknown error from server. Response:", result);
+                    Swal.fire({title:'ข้อผิดพลาด', text: result.message || 'ไม่สามารถดึงข้อมูลรหัสครูจากเซิร์ฟเวอร์ได้', icon:'error', customClass: { popup: 'swal-custom-large' }});
+                    return null; 
+                }
+            } catch (error) {
+                console.error("Error fetching teacher codes:", error);
+                Swal.close();
+                Swal.fire({title:'ข้อผิดพลาดในการเชื่อมต่อ', text:`ไม่สามารถติดต่อเซิร์ฟเวอร์เพื่อดึงรหัสครูได้: ${error.message}`, icon:'error', customClass: { popup: 'swal-custom-large' }});
+                return null; 
+            }
+        }
+
+        async function promptForTeacherCode() {
+            if (!validTeacherCodesStore || validTeacherCodesStore.length === 0) {
+                validTeacherCodesStore = await fetchTeacherCodesFromServer();
+            }
+
+            if (validTeacherCodesStore === null) {
+                Swal.fire({
+                    title: 'ข้อผิดพลาดในการโหลดข้อมูล',
+                    text: 'ไม่สามารถดึงข้อมูลรหัสครูจากเซิร์ฟเวอร์ได้ กรุณารีเฟรชหรือติดต่อผู้ดูแลระบบ',
+                    icon: 'error',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    customClass: { popup: 'swal-custom-large' }
+                });
+                return false; 
+            }
+
+            if (validTeacherCodesStore.length === 0) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ไม่พบรหัสครูที่ถูกต้อง',
+                    text: 'ไม่พบรหัสครูผู้สอนที่สามารถใช้งานได้ในระบบ กรุณาติดต่อผู้ดูแลระบบ',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    customClass: { popup: 'swal-custom-large' },
+                });
+                return false; 
+            }
+            while (true) {
+                const result = await Swal.fire({
+                    title: 'กรุณาใส่รหัสครูผู้สอน',
+                    input: 'password',
+                    inputLabel: "รหัสครูผู้สอนของคุณ", 
+                    inputPlaceholder: 'รหัสครู 4 หลัก',
+                    inputAttributes: {
+                        maxlength: 4,
+                        autocapitalize: 'off',
+                        autocorrect: 'off'
+                    },
+                    allowOutsideClick: false,    
+                    allowEscapeKey: false,       
+                    confirmButtonText: 'ตกลง',
+                    showCancelButton: true,      
+                    cancelButtonText: 'ยกเลิก', 
+                    showLoaderOnConfirm: true,
+                    customClass: {
+                        popup: 'swal-custom-large'
+                    },
+                    preConfirm: (code) => {
+                        if (!code || !/^\d{4}$/.test(code)) {
+                            Swal.showValidationMessage('รหัสครูต้องเป็นตัวเลข 4 หลัก');
+                            return false; 
+                        }
+                        if (!validTeacherCodesStore.includes(code)) {
+                            Swal.showValidationMessage('รหัสครูไม่ถูกต้อง');
+                            return false; 
+                        }
+                        return code; 
+                    }
+                });
+
+                if (result.isConfirmed && result.value) {
+                    Swal.fire({ icon: 'success', title: 'ยืนยันรหัสสำเร็จ!', timer: 1000, showConfirmButton: false, customClass: { popup: 'swal-custom-large' } });
+                    return true; 
+                } else if (result.isDismissed && result.dismiss === Swal.DismissReason.cancel) {
+                    console.log("User cancelled authentication prompt. Re-prompting.");
+                } else {
+                    console.log("Authentication prompt dismissed unexpectedly or failed. Result:", result);
+                     Swal.fire({
+                        icon: 'error',
+                        title: 'การยืนยันตัวตนถูกยกเลิก',
+                        text: 'เกิดปัญหาในการยืนยันตัวตน กรุณาลองใหม่อีกครั้ง หรือติดต่อผู้ดูแลระบบหากปัญหายังคงอยู่',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        customClass: { popup: 'swal-custom-large' }
+                    });
+                    return false; 
+                }
+            }
+        }
+
+        function initializePageEventListeners() {
+            const bookingForm = document.getElementById('bookingForm');
+            if (bookingForm) {
+                bookingForm.addEventListener('submit', handleFormSubmit);
+            }
+
+            const filterLabEl = document.getElementById('filterLab');
+            if (filterLabEl) {
+                filterLabEl.addEventListener('change', function() {
+                    if ($.fn.DataTable.isDataTable('#bookingTable')) {
+                        $('#bookingTable').DataTable().column(0).search(this.value).draw();
+                    }
+                });
+            }
+
+            const filterDateEl = document.getElementById('filterDate');
+            if (filterDateEl) {
+                filterDateEl.addEventListener('change', function() {
+                     $.fn.dataTable.ext.search.push(
+                        function(settings, data, dataIndex) {
+                            if (settings.nTable.id !== 'bookingTable') { return true; }
+                            var filterDateVal = $('#filterDate').val();
+                            var tableDateCell = data[1]; 
+                            if (filterDateVal === '' || filterDateVal === null) { return true; }
+                            if (!tableDateCell) { return false; }
+                            var tableDate = '';
+                            if (tableDateCell.includes('/')) { 
+                                const parts = tableDateCell.split(' ')[0].split('/');
+                                if (parts.length === 3) {
+                                    tableDate = `${parseInt(parts[2]) - 543}-${parts[1].padStart(2, '0')}-${parts[0].padStart(2, '0')}`;
+                                } else { return false; }
+                            } else { 
+                                tableDate = tableDateCell.substring(0,10); 
+                            }
+                            return tableDate === filterDateVal;
+                        }
+                    );
+                    if ($.fn.DataTable.isDataTable('#bookingTable')) {
+                        $('#bookingTable').DataTable().draw();
+                    }
+                    $.fn.dataTable.ext.search.pop();
+                });
+            }
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                const targetTab = e.target.hash; 
+
+                if (targetTab === '#bookingTableTab') {
+                    if ($.fn.DataTable.isDataTable('#bookingTable')) {
+                        $($.fn.dataTable.tables(true)).DataTable().responsive.recalc().columns.adjust();
+                    }
+                } else if (targetTab === '#physicsCalendarViewTab') {
+                    if (calendarInstances['physicsCalendar'] && typeof calendarInstances['physicsCalendar'].updateSize === 'function') {
+                        calendarInstances['physicsCalendar'].updateSize();
+                    } else {
+                        if (allFetchedBookings.length > 0 && document.getElementById('physicsCalendar')) {
+                            const physicsBookings = allFetchedBookings.filter(b => b.labRequested === "ห้องปฏิบัติการฟิสิกส์");
+                            initializeLabCalendar('physicsCalendar', physicsBookings, "ห้องปฏิบัติการฟิสิกส์");
+                        }
+                    }
+                } else if (targetTab === '#chemistryCalendarViewTab') {
+                    if (calendarInstances['chemistryCalendar'] && typeof calendarInstances['chemistryCalendar'].updateSize === 'function') {
+                        calendarInstances['chemistryCalendar'].updateSize();
+                    } else {
+                        if (allFetchedBookings.length > 0 && document.getElementById('chemistryCalendar')) {
+                            const chemistryBookings = allFetchedBookings.filter(b => b.labRequested === "ห้องปฏิบัติการเคมี");
+                            initializeLabCalendar('chemistryCalendar', chemistryBookings, "ห้องปฏิบัติการเคมี");
+                        }
+                    }
+                } else if (targetTab === '#biologyCalendarViewTab') {
+                    if (calendarInstances['biologyCalendar'] && typeof calendarInstances['biologyCalendar'].updateSize === 'function') {
+                        calendarInstances['biologyCalendar'].updateSize();
+                    } else {
+                         if (allFetchedBookings.length > 0 && document.getElementById('biologyCalendar')) {
+                            const biologyBookings = allFetchedBookings.filter(b => b.labRequested === "ห้องปฏิบัติการชีววิทยา");
+                            initializeLabCalendar('biologyCalendar', biologyBookings, "ห้องปฏิบัติการชีววิทยา");
+                        }
+                    }
+                }
+            });
+        }
+
+
+        function initializePageContent() {
+            document.getElementById('mainContent').style.display = 'block';
+            initializePageEventListeners(); 
+            initializeDateAndSlotPickers(); 
+            fetchBookingsAndInitTable(); 
+        }
+
+        document.addEventListener('DOMContentLoaded', async function(event) { // Added event parameter
+			// event.preventDefault(); // This was causing issues, should only be on form submit
+            console.log("DOMContentLoaded: Initiating teacher code authentication.");
+            const isAuthenticated = await promptForTeacherCode();
+            if (isAuthenticated) {
+                console.log("DOMContentLoaded: Authentication successful. Initializing page content.");
+                initializePageContent();
+            } else {
+                console.log("DOMContentLoaded: Authentication failed. Page content will not be loaded.");
+                // const mainCard = document.querySelector('.card.shadow-sm'); // Hides too much
+                // if (mainCard) mainCard.style.display = 'none';
+                document.getElementById('mainContent').style.display = 'none'; // Hide only the tabs
+                 const bodyElement = document.querySelector('.card-body'); // Insert message within the card
+                 if (bodyElement && !document.querySelector('#authFailedMessage')) { 
+                    const authFailedMessage = document.createElement('div');
+                    authFailedMessage.id = 'authFailedMessage';
+                    authFailedMessage.className = 'alert alert-danger text-center';
+                    authFailedMessage.setAttribute('role', 'alert');
+                    authFailedMessage.style.marginTop = '20px';
+                    authFailedMessage.innerHTML = '<strong>การยืนยันตัวตนล้มเหลว!</strong> ไม่สามารถโหลดเนื้อหาของหน้าได้ กรุณารีเฟรชหน้าและลองใหม่อีกครั้ง หรือติดต่อผู้ดูแลระบบ';
+                    
+                    // Insert after the marquee
+                    const marquee = bodyElement.querySelector('marquee');
+                    if (marquee && marquee.parentNode === bodyElement) {
+                         marquee.parentNode.insertBefore(authFailedMessage, marquee.nextSibling);
+                    } else if (bodyElement.firstChild) {
+                        bodyElement.insertBefore(authFailedMessage, bodyElement.firstChild);
+                    } else {
+                        bodyElement.appendChild(authFailedMessage);
+                    }
+                }
+            }
+        });
+
+        function initializeDateAndSlotPickers() {
+            const bookingDateEl = document.getElementById('bookingDate');
+            const now = new Date();
+            const today = now.toISOString().split('T')[0]; 
+            bookingDateEl.min = today;
+            const maxDate = new Date();
+            maxDate.setDate(now.getDate() + 7);
+            bookingDateEl.max = maxDate.toISOString().split('T')[0];
+        }
+
+
+        function formatUserDate(isoString) {
+            if (!isoString) return '';
+            const date = new Date(isoString);
+            return date.toLocaleDateString('th-TH', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        }
+
+        function formatUserTime(isoString) {
+            if (!isoString) return '';
+            const date = new Date(isoString);
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes} น.`;
+        }
+
+        function checkBookingOverlap(lab, startDateTime, endDateTime, currentBookingId = null) {
+            const newStart = new Date(startDateTime);
+            const newEnd = new Date(endDateTime);
+
+            for (const booking of mockBookings) { 
+                if (booking.id === currentBookingId) continue;
+                if (booking.labRequested === lab) {
+                    const existingStart = new Date(booking.startTime);
+                    const existingEnd = new Date(booking.endTime);
+                    if (newStart < existingEnd && newEnd > existingStart) {
+                        return true; 
+                    }
+                }
+            }
+            return false; 
+        }
+
+        function getSelectedOptionText(selectElementId) {
+            const selectElement = document.getElementById(selectElementId);
+            if (selectElement && selectElement.selectedIndex >= 0) { 
+                if (selectElement.options[selectElement.selectedIndex].disabled) {
+                    return ''; 
+                }
+                return selectElement.options[selectElement.selectedIndex].text;
+            }
+            return '';
+        }
+
+
+        async function handleFormSubmit(event) {
+            event.preventDefault();
+
+            const lab = document.getElementById('labRequested').value;
+            const selectedDate = document.getElementById('bookingDate').value;
+            const startTimeSlotValue = document.getElementById('startTimeSlot').value; 
+            const endTimeSlotValue = document.getElementById('endTimeSlot').value;   
+            
+            const requesterName = document.getElementById('requesterName').value;
+            const fieldOfStudy = document.getElementById('fieldOfStudy').value;
+            const studentGrade = document.getElementById('studentGrade').value;
+            const studentCount = document.getElementById('studentCount').value || "ไม่ได้ระบุ"; 
+            const topic = document.getElementById('topic').value || "ไม่ได้ระบุ"; 
+            const materialsNeeded = document.getElementById('materialsNeeded').value || "ไม่มี"; 
+            const directionLabFile = document.getElementById('directionLabFile').files[0]; // Get the file
+
+            const startTimeSlotText = getSelectedOptionText('startTimeSlot');
+            const endTimeSlotText = getSelectedOptionText('endTimeSlot');
+
+
+            if (!selectedDate || !startTimeSlotValue || !endTimeSlotValue || !requesterName || !fieldOfStudy || !lab || !studentGrade) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'ข้อมูลไม่ครบถ้วน',
+                    text: 'กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน: ผู้จอง, สาขา, ห้อง, วันที่, คาบเริ่ม, คาบสิ้นสุด, และห้องที่สอน',
+                    customClass: { popup: 'swal-custom-large' }
+                });
+                return;
+            }
+
+            const startTimeString = selectedDate + 'T' + startTimeSlotValue.split('-')[0] + ':00';
+            const endTimeString = selectedDate + 'T' + endTimeSlotValue.split('-')[1] + ':00';
+
+            const startDate = new Date(startTimeString);
+            const endDate = new Date(endTimeString);
+            const now = new Date();
+            
+            if (startDate < now) {
+                 Swal.fire({ icon: 'error', title: 'เวลาไม่ถูกต้อง', text: 'ไม่สามารถเลือกวัน/เวลาเริ่มต้นในอดีตได้ กรุณาเลือกวันและเวลาในอนาคต', customClass: { popup: 'swal-custom-large' } });
+                 return;
+            }
+
+            if (endDate <= startDate) {
+                Swal.fire({ icon: 'error', title: 'เวลาไม่ถูกต้อง', text: 'คาบเรียนสิ้นสุดต้องอยู่หลังคาบเรียนเริ่มต้น', customClass: { popup: 'swal-custom-large' } });
+                return;
+            }
+            
+            const bookingDateEl = document.getElementById('bookingDate');
+            const maxAllowedBookingDate = new Date(bookingDateEl.max + "T23:59:59");
+            if (new Date(selectedDate) > maxAllowedBookingDate) {
+                Swal.fire({ icon: 'error', title: 'เวลาไม่ถูกต้อง', text: `สามารถจองล่วงหน้าได้ไม่เกินวันที่ ${new Date(bookingDateEl.max).toLocaleDateString('th-TH', {day:'numeric', month:'long', year:'numeric'})} เท่านั้น`, customClass: { popup: 'swal-custom-large' } });
+                return;
+            }
+
+            if (checkBookingOverlap(lab, startTimeString, endTimeString)) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'ไม่สามารถจองได้',
+                    text: `${lab} ไม่ว่างในช่วงเวลาที่คุณเลือก กรุณาตรวจสอบตารางหรือปฏิทินและเลือกเวลาอื่น`,
+                    customClass: { popup: 'swal-custom-large' }
+                });
+                return;
+            }
+            
+            let fileNameDisplay = "ไม่มี";
+            if (directionLabFile) {
+                fileNameDisplay = directionLabFile.name;
+            }
+
+            const confirmationHtml = `
+                <div style="text-align: left; padding-left: 10px; font-size: 0.95em;">
+                    <p><strong><i class="fas fa-user"></i> ผู้จอง:</strong> ${requesterName}</p>
+                    <p><strong><i class="fas fa-atom"></i> สาขา:</strong> ${fieldOfStudy}</p>
+                    <p><strong><i class="fas fa-microscope"></i> ห้อง:</strong> ${lab}</p>
+                    <p><strong><i class="fas fa-calendar-alt"></i> วันที่:</strong> ${new Date(selectedDate).toLocaleDateString('th-TH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p><strong><i class="fas fa-clock"></i> เริ่ม:</strong> ${startTimeSlotText}</p>
+                    <p><strong><i class="fas fa-clock"></i> สิ้นสุด:</strong> ${endTimeSlotText}</p>
+                    <p><strong><i class="fas fa-chalkboard-teacher"></i> สอนห้อง:</strong> ${studentGrade}</p>
+                    <p><strong><i class="fas fa-users"></i> นร.:</strong> ${studentCount}</p>
+                    <p><strong><i class="fas fa-book"></i> หัวข้อ:</strong> ${topic}</p>
+                    <p><strong><i class="fas fa-tools"></i> สิ่งที่ต้องการ:</strong> ${materialsNeeded}</p>
+                    <p><strong><i class="fas fa-file-alt"></i> ไฟล์ Direction Lab:</strong> ${fileNameDisplay}</p>
+                </div>
+            `;
+
+            Swal.fire({
+                title: 'ยืนยันข้อมูลการจอง',
+                html: confirmationHtml,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'ยืนยันการจอง',
+                cancelButtonText: 'ยกเลิก',
+                customClass: {
+                    popup: 'swal-custom-large', 
+                    htmlContainer: 'swal-custom-large .swal2-html-container' 
+                }
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    // Use FormData constructor with the form element
+                    const formElement = event.target;
+                    const submissionFormData = new FormData(formElement);
+                    
+                    // Set/delete fields as before
+                    submissionFormData.set('startTime', startTimeString);
+                    submissionFormData.set('endTime', endTimeString);
+                    submissionFormData.delete('bookingDate');
+                    submissionFormData.delete('startTimeSlot');
+                    submissionFormData.delete('endTimeSlot');
+                    // The file 'directionLabFile' is already part of submissionFormData if selected
+
+                    Swal.fire({
+                        title: 'กำลังส่งข้อมูล...',
+                        text: 'กรุณารอสักครู่',
+                        allowOutsideClick: false,
+                        customClass: { popup: 'swal-custom-large' },
+                        didOpen: () => { Swal.showLoading(); }
+                    });
+
+                    try {
+                        // IMPORTANT: When sending FormData with files, do NOT set Content-Type header manually.
+                        // The browser will set it to 'multipart/form-data' with the correct boundary.
+                        const response = await fetch(APPS_SCRIPT_WEB_APP_URL, { 
+                            method: 'POST', 
+                            body: submissionFormData 
+                        });
+                        if (!response.ok) {
+                            let errorText = `HTTP error! Status: ${response.status}`;
+                            try { const errorResult = await response.json(); errorText = errorResult.message || errorText; } 
+							catch (e) { /* Use existing errorText */ }
+                            throw new Error(errorText);
+                        }
+                        const serverResult = await response.json();
+                        Swal.close(); 
+                        if (serverResult.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'จองสำเร็จ!',
+                                text: serverResult.message || 'ข้อมูลการจองของคุณถูกบันทึกแล้ว',
+                                customClass: { popup: 'swal-custom-large' }
+                            });
+                            event.target.reset(); // Resets the form, including file input
+                            initializeDateAndSlotPickers();
+                            fetchBookingsAndInitTable(); 
+                            $('.nav-tabs a[href="#bookingTableTab"]').tab('show'); 
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'การจองไม่สำเร็จ',
+                                text: serverResult.message || 'ไม่สามารถบันทึกข้อมูลการจองได้ กรุณาลองใหม่อีกครั้ง',
+                                customClass: { popup: 'swal-custom-large' }
+                            });
+                        }
+                    } catch (error) {
+                        Swal.close(); 
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'เกิดข้อผิดพลาดในการเชื่อมต่อ',
+                            text: 'ไม่สามารถติดต่อเซิร์ฟเวอร์ได้: ' + error.message,
+                            customClass: { popup: 'swal-custom-large' }
+                        });
+                    }
+                } else {
+                    Swal.fire({
+                        title: 'ยกเลิกแล้ว',
+                        text: 'การจองของคุณยังไม่ได้ถูกบันทึก',
+                        icon: 'info',
+                        customClass: { popup: 'swal-custom-large' }
+                    });
+                }
+            });
+        }
+
+        function formatTableDateTime(dateTimeString) {
+            if (!dateTimeString) return '';
+            const date = new Date(dateTimeString);
+            return date.toLocaleString('th-TH', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).replace(',', '');
+        }
+
+        function getLabColor(labName) {
+            if (!labName) return '#777777';
+            if (labName.includes('ฟิสิกส์')) return '#007bff';
+            if (labName.includes('เคมี')) return '#ffc107';
+            if (labName.includes('ชีววิทยา')) return '#28a745';
+            return '#6c757d';
+        }
+
+        function initializeLabCalendar(elementId, specificLabBookings, labNameDisplay) {
+            const calendarEl = document.getElementById(elementId);
+            if (!calendarEl) {
+                console.error(`Calendar element #${elementId} not found for init!`);
+                return;
+            }
+
+            const events = specificLabBookings.map(booking => ({
+                id: booking.bookingID || booking.id,
+                title: `${(booking.labRequested || labNameDisplay).replace('ห้องปฏิบัติการ', '').trim()} (${booking.requesterName || 'N/A'}) - ${booking.studentGrade || ''}`,
+                start: booking.startTime,
+                end: booking.endTime,
+                extendedProps: {
+                    lab: booking.labRequested,
+                    requester: booking.requesterName,
+                    grade: booking.studentGrade,
+                    topic: booking.topic,
+                    materials: booking.materialsNeeded,
+                    directionLabFileURL: booking.directionLabFileURL, // <-- Added for calendar
+                    startTimeFull: booking.startTime,
+                    endTimeFull: booking.endTime
+                },
+                color: getLabColor(booking.labRequested) 
+            }));
+
+            if (calendarInstances[elementId]) {
+                calendarInstances[elementId].destroy();
+            }
+
+            calendarInstances[elementId] = new FullCalendar.Calendar(calendarEl, {
+                locale: 'th',
+                initialView: 'listWeek', 
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+                },
+                events: events,
+                eventClick: function(info) {
+                    const props = info.event.extendedProps;
+                    document.getElementById('eventLab').textContent = props.lab || '-';
+                    document.getElementById('eventRequester').textContent = props.requester || '-';
+                    document.getElementById('eventStart').textContent = formatTableDateTime(props.startTimeFull);
+                    document.getElementById('eventEnd').textContent = formatTableDateTime(props.endTimeFull);
+                    document.getElementById('eventGrade').textContent = props.grade || '-';
+                    document.getElementById('eventTopic').textContent = props.topic || '-';
+                    document.getElementById('eventMaterials').textContent = props.materials || '-';
+                    // Display file link in modal
+                    const fileLinkHtml = props.directionLabFileURL 
+                        ? `<a href="${props.directionLabFileURL}" target="_blank" rel="noopener noreferrer">ดูไฟล์</a>` 
+                        : 'ไม่มี';
+                    document.getElementById('eventDirectionLabFile').innerHTML = fileLinkHtml;
+
+                    $('#eventDetailModal').modal('show');
+                },
+                slotMinTime: '08:00:00',
+                slotMaxTime: '18:00:00',
+                height: 'auto', 
+                contentHeight: 450, 
+                stickyHeaderDates: true,
+                eventTimeFormat: { hour: '2-digit', minute: '2-digit', hour12: false, meridiem: false }
+            });
+
+            try {
+                calendarInstances[elementId].render();
+            } catch (e) {
+                console.error(`Error rendering calendar for ${elementId}:`, e);
+                calendarEl.innerHTML = `<div class="alert alert-danger text-center" style="margin-top:10px;">ขออภัย, ไม่สามารถแสดงปฏิทินสำหรับ ${labNameDisplay} ได้</div>`;
+            }
+        }
+
+
+        async function fetchBookingsAndInitTable() {
+			 Swal.fire({ // Changed from success to info for loading indication
+				  icon: "info",
+				  title: "กำลังโหลดข้อมูลการจอง...",
+                  text: "กรุณารอสักครู่",
+				  showConfirmButton: false,
+                  allowOutsideClick: false,
+				  // timer: 1500, // Removed timer for explicit close
+				  customClass: { popup: 'swal-custom-large' },
+                  didOpen: () => { Swal.showLoading() }
+				});
+		
+            try {
+                const response = await fetch(APPS_SCRIPT_WEB_APP_URL); 
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP error when fetching bookings! Status: ${response.status}. ${errorText.substring(0,200)}`);
+                }
+                let fetchedBookingsFromServer = await response.json();
+                if (!Array.isArray(fetchedBookingsFromServer)) {
+                    if (typeof fetchedBookingsFromServer === 'object' && fetchedBookingsFromServer !== null && Array.isArray(fetchedBookingsFromServer.bookings)) {
+                        fetchedBookingsFromServer = fetchedBookingsFromServer.bookings;
+                    } else if (typeof fetchedBookingsFromServer === 'object' && fetchedBookingsFromServer !== null && typeof fetchedBookingsFromServer.message === 'string' && !fetchedBookingsFromServer.success) {
+                        console.warn("Server returned an error message:", fetchedBookingsFromServer.message);
+                        fetchedBookingsFromServer = []; 
+                        throw new Error(fetchedBookingsFromServer.message); 
+                    }
+                    else {
+                        console.warn("Bookings data is not an array, using empty array. Raw data:", fetchedBookingsFromServer);
+                        fetchedBookingsFromServer = [];
+                    }
+                }
+                allFetchedBookings = fetchedBookingsFromServer;
+                 mockBookings = allFetchedBookings.map(b => ({ 
+                    id: b.bookingID || b.id || (b.extendedProps ? b.extendedProps.id : undefined), 
+                    labRequested: b.labRequested || (b.extendedProps ? b.extendedProps.lab : undefined), 
+                    startTime: b.startTime || (b.extendedProps ? b.extendedProps.startTimeFull : undefined), 
+                    endTime: b.endTime || (b.extendedProps ? b.extendedProps.endTimeFull: undefined)
+                })).filter(b => b.startTime && b.endTime); 
+                
+                const isDataTable = $.fn.DataTable.isDataTable('#bookingTable');
+                if (isDataTable) {
+                    $('#bookingTable').DataTable().clear().rows.add(allFetchedBookings).draw();
+                } else {
+                    $('#bookingTable').DataTable({
+                        data: allFetchedBookings,
+                        columns: [
+                            { data: 'labRequested', title: 'ห้องปฏิบัติการ' },
+                            { data: 'startTime', title: 'วัน/เวลาเริ่มต้น', render: data => formatTableDateTime(data) },
+                            { data: 'endTime', title: 'วัน/เวลาสิ้นสุด', render: data => formatTableDateTime(data) },
+                            { data: 'requesterName', title: 'ชื่อผู้ขอใช้' },
+                            { data: 'studentGrade', title: 'สอนนักเรียน ชั้น' },
+                            { data: 'materialsNeeded', title: 'วัสดุ/อุปกรณ์/สารเคมี' },
+                            // New column for Direction Lab File URL
+                            { 
+                                data: 'directionLabFileURL', 
+                                title: 'ไฟล์ Direction Lab',
+                                render: function(data, type, row) {
+                                    if (type === 'display' && data) {
+                                        return `<a href="${data}" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-xs"><i class="fas fa-file-alt"></i> ดูไฟล์</a>`;
+                                    }
+                                    return data ? 'มีไฟล์' : 'ไม่มี'; // For sorting/filtering, or if not display
+                                }
+                            }
+                        ],
+                        responsive: true, order: [[1, 'desc']],
+                        language: { url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Thai.json' },
+                    });
+                }
+                
+                if (document.getElementById('physicsCalendar') && document.getElementById('chemistryCalendar') && document.getElementById('biologyCalendar')) {
+                    const physicsBookings = allFetchedBookings.filter(b => b.labRequested === "ห้องปฏิบัติการฟิสิกส์");
+                    initializeLabCalendar('physicsCalendar', physicsBookings, "ห้องปฏิบัติการฟิสิกส์");
+
+                    const chemistryBookings = allFetchedBookings.filter(b => b.labRequested === "ห้องปฏิบัติการเคมี");
+                    initializeLabCalendar('chemistryCalendar', chemistryBookings, "ห้องปฏิบัติการเคมี");
+
+                    const biologyBookings = allFetchedBookings.filter(b => b.labRequested === "ห้องปฏิบัติการชีววิทยา");
+                    initializeLabCalendar('biologyCalendar', biologyBookings, "ห้องปฏิบัติการชีววิทยา");
+                } else {
+                    console.warn("One or more lab calendar elements not found when trying to initialize after fetching bookings.");
+                }
+
+                if ($('#bookingTableTab').hasClass('active') || !isDataTable) { 
+                     setTimeout(function() { 
+                         if($.fn.DataTable.isDataTable('#bookingTable')){
+                            $($.fn.dataTable.tables(true)).DataTable().responsive.recalc().columns.adjust();
+                         }
+                    }, 250); 
+                }
+                Swal.close(); 
+            } catch (error) {
+                console.error("Error in fetchBookingsAndInitTable:", error);
+                Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาดในการโหลดข้อมูล', text: 'ไม่สามารถดึงข้อมูลการจองได้: ' + error.message, customClass: { popup: 'swal-custom-large' } });
+                if (!$.fn.DataTable.isDataTable('#bookingTable')) {
+                    $('#bookingTable').DataTable({ responsive: true, searching: false, data: [], columns: [ { title: 'ห้องปฏิบัติการที่ขอใช้' }, { title: 'วัน/เวลาเริ่มต้น'}, { title: 'วัน/เวลาสิ้นสุด'}, { title: 'ชื่อผู้ขอใช้' }, { title: 'สอนนักเรียน ชั้น' }, { title: 'วัสดุ/อุปกรณ์/สารเคมี' }, { title: 'ไฟล์ Direction Lab' } ], language: { url: '//cdn.datatables.net/plug-ins/1.10.21/i18n/Thai.json', emptyTable: "ไม่สามารถโหลดข้อมูลการจองได้ หรือยังไม่มีการจอง" } });
+                }
+                const calendarIds = ['physicsCalendar', 'chemistryCalendar', 'biologyCalendar'];
+                calendarIds.forEach(id => {
+                    const calEl = document.getElementById(id);
+                    if (calEl && (!calendarInstances[id] || !calEl.querySelector('.fc-view-harness'))) { 
+                        calEl.innerHTML = `<div class="alert alert-warning text-center" style="margin-top:10px;">ไม่สามารถโหลดข้อมูลปฏิทินได้ (${error.message}) หรือยังไม่มีข้อมูล</div>`;
+                    }
+                });
+            }
+        }
+    </script>
+</body>
+</html>
